@@ -33,6 +33,15 @@ class Tableau1 extends Phaser.Scene{
         //texture au fond  TODO élève : faire une boucle pour charger les 3 images et démontrer par la même que vous savez aller au plus simple
         this.load.image('bg-animation-a', 'assets/level/background-2/bg-animation/bg-animation-a.png');
 
+        //personnage
+        for (let i = 1; i <= 10; i++) {
+            this.load.image('layer'+i, 'assets/characters/boy/boy_style_1/idle/layer'+i+'.png');
+
+        //enemy2
+            for (let i = 1; i <= 6; i++) {
+                this.load.image('enemy2-idle'+i, 'assets/characters/enemy2/PNG/idle'+i+'.png');
+        }
+
     }
 
     /**
@@ -165,6 +174,35 @@ class Tableau1 extends Phaser.Scene{
         this.bg2Container.scrollFactorX=0.2;
         this.bg1Container.scrollFactorX=0.4;
         this.groundContainer.scrollFactorX=1;
+        /**
+         * animation personnage
+         */
+        this.player = this.add.sprite(0, 0, 'layer1').setOrigin(0,0);
+        this.anims.create({
+            key: 'idl',
+            frames: this.getFrames("layer",10),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.player.play('idl');
+        //this.idle.setTintFill(0xf00ff00);
+
+
+
+    }
+
+    /**
+     * Renvoie un tableau d'images
+     * @param prefix
+     * @param length
+     * @returns {*[]}
+     */
+    getFrames(prefix,length){
+        let frames=[];
+        for (let i=1;i<=length;i++){
+            frames.push({key: prefix+i});
+        }
+        return frames;
     }
     /**
      * Définit ce qui se passe quand on appuie ou relache une touche du clavier
@@ -195,17 +233,5 @@ class Tableau1 extends Phaser.Scene{
             }
         });
     }
-
-    /**
-     * Cette fonction s'exécute en boucle (à peu près 60 fois par secondes)
-     */
-    update(){
-        //déplacement de la caméra
-        this.cameras.main.scrollX+=this.speed; // on aurait pu écrire : this.cameras.main.scrollX= this.cameras.main.scrollX + this.speed;
-
-        //petit effet de vibrance sur le filtre film au tout premier plan
-        this.filterFilm.setAlpha(Phaser.Math.Between(95,100)/100)
-    }
-
 
 }
