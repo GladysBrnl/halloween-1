@@ -35,11 +35,11 @@ class Tableau1 extends Phaser.Scene{
 
         //personnage
         for (let i = 1; i <= 10; i++) {
-            this.load.image('layer'+i, 'assets/characters/boy/boy_style_1/idle/layer'+i+'.png');
-
+            this.load.image('layer' + i, 'assets/characters/boy/boy_style_1/idle/layer' + i + '.png');
+        }
         //enemy2
             for (let i = 1; i <= 6; i++) {
-                this.load.image('enemy2-idle'+i, 'assets/characters/enemy2/PNG/idle'+i+'.png');
+                this.load.image('enemy2-anim-img'+i, 'assets/characters/enemy2/PNG/idle/enemy2-idle'+i+'.png');
         }
 
     }
@@ -49,6 +49,7 @@ class Tableau1 extends Phaser.Scene{
      * TODO élèves : reproduire à l'identique assets/level/00-preview-example/sample1.jpg
      * TODO élèves : plus tard, continuez le décor vers la droite en vous servant des assets mis à votre disposition
      */
+
     create(){
 
         /**
@@ -187,8 +188,18 @@ class Tableau1 extends Phaser.Scene{
         this.player.play('idl');
         //this.idle.setTintFill(0xf00ff00);
 
-
-
+        /**
+         * animation ennemi 2
+         */
+        this.enemy2 = this.add.sprite(0, 0, 'enemy2-anim-img').setOrigin(0,0);
+        this.anims.create({
+            key: 'enemy2-anim',
+            frames: this.getFrames("enemy2-anim-img",6),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.enemy2.play('enemy2-anim');
+        //this.idle.setTintFill(0xf00ff00);
     }
 
     /**
